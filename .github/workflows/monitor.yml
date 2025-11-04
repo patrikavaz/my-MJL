@@ -2,8 +2,8 @@ name: Monitor Liara.ir JS Changes
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # هر 30 دقیقه اجرا بشه (UTC)
-  workflow_dispatch:       # برای اجرای دستی
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
 
 jobs:
   monitor:
@@ -12,39 +12,33 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Create directories
-        run: |
-          mkdir -p chunks/pages
-          mkdir -p chunks
+      - name: Create folders
+        run: mkdir -p chunks/pages chunks/webpack
 
-      - name: Download all JS files from /_next/static/chunks/pages/
+      - name: Download build manifest (لیست همه JSها)
         run: |
-          curl -s https://liara.ir/_next/static/chunks/pages/ > pages.html
-          grep -o '"[^"]*\.js"' pages.html | tr -d '"' | while read file; do
-            full_url="https://liara.ir/_next/static/chunks/pages/$file"
-            filename=$(basename "$file")
-            echo "Downloading $full_url"
-            curl -s -L "$full_url" -o "chunks/pages/$filename" || echo "Failed: $file"
+          curl -s https://liara.ir/_next/static/$(curl -s https://liara.ir | grep -o '"buildId":"[^"]*"' | cut -d'"' -f4)/buildManifest.js > buildManifest.js
+
+      - name: Extract ALL JS paths from manifest
+        run: |
+          grep -o '/_next/static/[^"]*\.js' buildManifest.js | sort -u > js-list.txt
+
+      - name: Download every JS file
+        run: |
+          cat js-list.txt | while read path; do
+            url="https://liara.ir$path"
+            file="./chunks${path#_next/static}"
+            mkdir -p "$(dirname "$file")"
+            echo "↓ $url"
+            curl -f -L --create-dirs "$url" -o "$file" || echo "✘ Failed: $url"
           done
 
-      - name: Download all JS files from /_next/static/chunks/ (main files)
+      - name: Beautify JS (خوانا کن!)
         run: |
-          curl -s https://liara.ir/_next/static/chunks/ > chunks.html
-          grep -o '"[^"]*\.js"' chunks.html | tr -d '"' | while read file; do
-            full_url="https://liara.ir/_next/static/chunks/$file"
-            filename=$(basename "$file")
-            echo "Downloading $full_url"
-            curl -s -L "$full_url" -o "chunks/$filename" || echo "Failed: $file"
-          done
+          npx js-beautify@latest -r "chunks/**/*.js" || true
 
-      - name: Remove temp HTML files
-        run: rm -f pages.html chunks.html
-
-      - name: Commit and push if changed
+      - name: Commit فقط اگر تغییر کرد
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Auto-update: JS files changed on liara.ir"
-          file_pattern: 'chunks/**/*.js'
-          commit_user_name: "Liara Monitor Bot"
-          commit_user_email: "bot@liara.ir"
-          commit_author: "Liara Monitor <bot@liara.ir>"
+          commit_message: "Liara.ir JS updated $(date)"
+          file_pattern: chunks
