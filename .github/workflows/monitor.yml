@@ -12,47 +12,40 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Create chunks folder
-        run: mkdir -p chunks
+      - name: Create folders
+        run: mkdir -p chunks/pages chunks
 
-      - name: Get buildId from homepage
-        id: build
+      - name: Download list of pages JS
         run: |
-          BUILD_ID=$(curl -s https://liara.ir | grep -o '"buildId":"[^"]*"' | head -1 | cut -d'"' -f4)
-          if [ -z "$BUILD_ID" ]; then
-            echo "خطا: buildId پیدا نشد!"
-            exit 1
-          fi
-          echo "build_id=$BUILD_ID" >> $GITHUB_OUTPUT
-          echo "buildId پیدا شد: $BUILD_ID"
+          curl -s https://liara.ir/_next/static/chunks/pages/ > pages.html
+          grep -o 'href="[^"]*\.js"' pages.html | cut -d'"' -f2 > pages_list.txt
 
-      - name: Download _buildManifest.js
+      - name: Download list of main chunks
         run: |
-          URL="https://liara.ir/_next/static/${{ steps.build.outputs.build_id }}/_buildManifest.js"
-          echo "دانلود از: $URL"
-          curl -f -L "$URL" -o chunks/_buildManifest.js || exit 1
+          curl -s https://liara.ir/_next/static/chunks/ > chunks.html
+          grep -o 'href="[^"]*\.js"' chunks.html | cut -d'"' -f2 > chunks_list.txt
 
-      - name: Extract JS paths
+      - name: Download ALL JS files
         run: |
-          grep -o '/_next/static/[^"]*\.js' chunks/_buildManifest.js | sort -u > js_paths.txt
-          echo "تعداد فایل JS: $(wc -l < js_paths.txt)"
-
-      - name: Download all JS files
-        run: |
-          cat js_paths.txt | while read path; do
-            url="https://liara.ir$path"
-            file="chunks${path#_next/static}"
-            mkdir -p "$(dirname "$file")"
-            curl -f -L "$url" -o "$file" || echo "Failed: $url"
+          cat pages_list.txt chunks_list.txt | sort -u | while read file; do
+            url="https://liara.ir/_next/static/chunks/$file"
+            if [[ "$file" == pages/* ]]; then
+              out="chunks/pages/${file#pages/}"
+            else
+              out="chunks/$file"
+            fi
+            mkdir -p "$(dirname "$out")"
+            echo "↓ $url"
+            curl -f -L "$url" -o "$out" && echo "✓ $file"
           done
 
-      - name: Beautify JS files
+      - name: Beautify (خوانا کن!)
         run: |
           npm install -g js-beautify
-          find chunks -name "*.js" -exec js-beautify -r {} \; || true
+          find chunks -name "*.js" -exec js-beautify -r {} \;
 
       - name: Commit if changed
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Liara.ir updated (build: ${{ steps.build.outputs.build_id }})"
+          commit_message: "Liara.ir JS updated $(date +'%Y-%m-%d %H:%M')"
           file_pattern: chunks
