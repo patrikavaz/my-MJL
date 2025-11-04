@@ -9,37 +9,27 @@ jobs:
   monitor:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Create folders
-        run: mkdir -p chunks/pages chunks
+      - name: Prepare folders
+        run: mkdir -p chunks
 
-      - name: Download list of pages JS
+      - name: Fetch all JS URLs from main page
         run: |
-          curl -s https://liara.ir/_next/static/chunks/pages/ > pages.html
-          grep -o 'href="[^"]*\.js"' pages.html | cut -d'"' -f2 > pages_list.txt
+          curl -s https://liara.ir | grep -o '/_next/static[^"]*\.js' | sort -u > js_list.txt
+          cat js_list.txt
 
-      - name: Download list of main chunks
+      - name: Download JS files
         run: |
-          curl -s https://liara.ir/_next/static/chunks/ > chunks.html
-          grep -o 'href="[^"]*\.js"' chunks.html | cut -d'"' -f2 > chunks_list.txt
-
-      - name: Download ALL JS files
-        run: |
-          cat pages_list.txt chunks_list.txt | sort -u | while read file; do
-            url="https://liara.ir/_next/static/chunks/$file"
-            if [[ "$file" == pages/* ]]; then
-              out="chunks/pages/${file#pages/}"
-            else
-              out="chunks/$file"
-            fi
+          while read file; do
+            url="https://liara.ir${file}"
+            out="chunks${file#/_next/static/chunks}"
             mkdir -p "$(dirname "$out")"
             echo "↓ $url"
             curl -f -L "$url" -o "$out" && echo "✓ $file"
-          done
+          done < js_list.txt
 
-      - name: Beautify (خوانا کن!)
+      - name: Beautify JS
         run: |
           npm install -g js-beautify
           find chunks -name "*.js" -exec js-beautify -r {} \;
