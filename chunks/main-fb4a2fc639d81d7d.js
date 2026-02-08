@@ -562,7 +562,7 @@
                 H = m._(r(57467)),
                 W = m._(r(28012));
             r(87643);
-            let G = "15.1.11",
+            let G = "15.1.12",
                 q = (0, E.default)(),
                 X = e => [].slice.call(e),
                 V = !1;
@@ -3132,7 +3132,6 @@
                 if (!await D(e) || !e.fetchData) return null;
                 let t = await e.fetchData(),
                     r = await
-
                 function(e, t, r) {
                     let n = {
                             basePath: r.router.basePath,
