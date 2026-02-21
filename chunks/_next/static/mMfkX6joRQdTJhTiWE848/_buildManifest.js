@@ -1,0 +1,61 @@
+self.__BUILD_MANIFEST = function(s, c, a, t, e, u, g, d, p, o, i, r, l, b, n, f, h, k, j, m, _) {
+    return {
+        __rewrites: {
+            afterFiles: [],
+            beforeFiles: [],
+            fallback: []
+        },
+        __routerFilterStatic: {
+            numItems: 0,
+            errorRate: 1e-4,
+            numBits: 0,
+            numHashes: null,
+            bitArray: []
+        },
+        __routerFilterDynamic: {
+            numItems: 0,
+            errorRate: 1e-4,
+            numBits: o,
+            numHashes: null,
+            bitArray: []
+        },
+        "/": [s, c, a, t, "static/chunks/pages/index-eb445e1ebdbdaadb.js"],
+        "/404": [s, c, a, t, "static/chunks/pages/404-1a37515450085ab0.js"],
+        "/_error": ["static/chunks/pages/_error-69472128dcb42fe2.js"],
+        "/about": [s, c, a, t, "static/chunks/pages/about-095de2bff252c818.js"],
+        "/abuse": [s, c, a, t, "static/chunks/pages/abuse-ae0eb75e1fd96abd.js"],
+        "/blog": [s, g, c, a, d, t, "static/chunks/pages/blog-2357bb92e2890a52.js"],
+        "/blog/author/[slug]": [s, g, c, a, d, t, "static/chunks/pages/blog/author/[slug]-38f587c6ac0ea154.js"],
+        "/blog/author/[slug]/page/[page]": [s, g, c, a, d, t, "static/chunks/pages/blog/author/[slug]/page/[page]-3bcd8c16c0baa7ca.js"],
+        "/blog/category/[slug]": [s, g, c, a, d, t, "static/chunks/pages/blog/category/[slug]-52e5236d4cb648fe.js"],
+        "/blog/category/[slug]/page/[page]": [s, g, c, a, d, t, "static/chunks/pages/blog/category/[slug]/page/[page]-ebe8250961741bcb.js"],
+        "/blog/page/[slug]": [s, g, c, a, d, t, "static/chunks/pages/blog/page/[slug]-d39674b0d10dfb61.js"],
+        "/blog/tag/[slug]": [s, g, c, a, d, t, "static/chunks/pages/blog/tag/[slug]-5070072080ed878b.js"],
+        "/blog/tag/[slug]/page/[page]": [s, g, c, a, d, t, "static/chunks/pages/blog/tag/[slug]/page/[page]-d4c0026bbcc3846b.js"],
+        "/blog/tags": [s, c, a, t, "static/chunks/pages/blog/tags-fa089a5bb954a225.js"],
+        "/blog/[slug]": [s, g, "static/chunks/fea29d9f-4f48e549ee05e8a6.js", "static/chunks/41155975-15f2d3811d324391.js", c, "static/chunks/1491-33de7f2994230ba0.js", a, t, "static/chunks/pages/blog/[slug]-42a865e1569c5477.js"],
+        "/bug-bounty": [s, c, a, t, "static/chunks/pages/bug-bounty-7da3790487c27d28.js"],
+        "/landing/[slug]": [s, c, a, e, u, p, t, "static/chunks/pages/landing/[slug]-915129b30fb05499.js"],
+        "/mirrors": [s, c, a, p, b, t, "static/chunks/pages/mirrors-4098401c387c19b2.js"],
+        "/mirrors/[slug]": [s, c, a, b, t, "static/chunks/pages/mirrors/[slug]-68defbf309738211.js"],
+        "/one-click-apps": [s, c, n, a, t, "static/chunks/pages/one-click-apps-ae540dcb0c149c31.js"],
+        "/one-click-apps/[slug]": [s, c, n, a, e, u, "static/css/9f0db14418d5753d.css", "static/chunks/pages/one-click-apps/[slug]-3dd8de999419ed76.js"],
+        "/pricing": [s, f, c, h, a, e, u, i, k, "static/css/4e480904913c580b.css", "static/chunks/pages/pricing-b51b3d5e9a9bcc9c.js"],
+        "/privacy-policy": [s, c, a, t, "static/chunks/pages/privacy-policy-4776188db72f8a45.js"],
+        "/products/ai": [s, c, a, e, t, "static/chunks/pages/products/ai-11a6f3d6dab8a468.js"],
+        "/products/ai/[slug]": [s, c, a, t, "static/chunks/pages/products/ai/[slug]-288e5764a672bd4a.js"],
+        "/products/cloud-server": [s, c, a, e, u, p, t, "static/chunks/pages/products/cloud-server-12356d2dfbd51d55.js"],
+        "/products/dns": [s, c, j, a, p, t, "static/chunks/pages/products/dns-a2cfcf57d2fa92d8.js"],
+        "/products/email": [s, c, m, a, p, i, _, "static/css/0bfb907f9787ae47.css", "static/chunks/pages/products/email-9c6426823c466377.js"],
+        "/products/free-cloud-host": [s, c, a, e, u, t, "static/chunks/pages/products/free-cloud-host-ba50da64a3d4b6aa.js"],
+        "/products/gaming-vps": [s, c, a, e, u, t, "static/chunks/pages/products/gaming-vps-7236aced7aa9bfc4.js"],
+        "/products/iranian-vps": [s, c, a, e, u, t, "static/chunks/pages/products/iranian-vps-82efc755d4dc952e.js"],
+        "/products/object-storage": [s, f, c, m, h, j, a, e, u, p, i, _, k, "static/css/e333a54558801f89.css", "static/chunks/pages/products/object-storage-a0d3c72fee27118a.js"],
+        "/products/vps": [s, c, a, e, u, t, "static/chunks/pages/products/vps-603cc9717ec1ed7e.js"],
+        "/products/[slug]": [s, c, a, e, u, i, t, "static/chunks/pages/products/[slug]-05abc061f76581ff.js"],
+        "/sla": [s, c, a, t, "static/chunks/pages/sla-b4b0537255bd9ba4.js"],
+        "/terms": [s, c, a, t, "static/chunks/pages/terms-e9a26c8150a64e7d.js"],
+        "/[...slug]": ["static/chunks/pages/[...slug]-13c00ac911331cfa.js"],
+        sortedPages: ["/", "/404", "/_app", "/_error", "/about", "/abuse", "/blog", "/blog/author/[slug]", "/blog/author/[slug]/page/[page]", "/blog/category/[slug]", "/blog/category/[slug]/page/[page]", "/blog/page/[slug]", "/blog/tag/[slug]", "/blog/tag/[slug]/page/[page]", "/blog/tags", "/blog/[slug]", "/bug-bounty", "/landing/[slug]", "/mirrors", "/mirrors/[slug]", "/one-click-apps", "/one-click-apps/[slug]", "/pricing", "/privacy-policy", "/products/ai", "/products/ai/[slug]", "/products/cloud-server", "/products/dns", "/products/email", "/products/free-cloud-host", "/products/gaming-vps", "/products/iranian-vps", "/products/object-storage", "/products/vps", "/products/[slug]", "/sla", "/terms", "/[...slug]"]
+    }
+}("static/chunks/ebc70433-8d1719ac23e3de00.js", "static/chunks/2790-beee3b3c39923210.js", "static/chunks/8848-a12b9a7d9d246715.js", "static/css/dfc228b36acf10d2.css", "static/chunks/1729-81bfc6abc1bd5c76.js", "static/chunks/4187-32690c828cb3882d.js", "static/chunks/cb355538-3d8c75488d61d393.js", "static/chunks/4028-bfbc2eb78a26c8c2.js", "static/chunks/6495-970d14af4f77e1fb.js", 0, "static/chunks/3688-ca484474ce6fc3cb.js", 0, 0, "static/chunks/1146-bbfd6270e77a0c12.js", "static/chunks/705-14b28a1dd3bebc83.js", "static/chunks/5727625e-a95c7cd12ec7ab20.js", "static/chunks/2681-9f0c8376bdb9f290.js", "static/chunks/5541-f4ac1c720d8dab4f.js", "static/chunks/5605-1304612e346a884b.js", "static/chunks/2715-9502a30909c0132a.js", "static/chunks/4674-70289c41b13a3c6a.js"), self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB();
